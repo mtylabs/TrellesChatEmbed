@@ -1,6 +1,6 @@
 #!/bin/bash
-flag=$1
-env=$2
+flag=$2
+env=$1
 mt=""
 # Acceptable flags
 js="js"
@@ -16,9 +16,6 @@ else
   exit
 fi
 
-# Build the project
-yarn build
-
 if [ "$flag" == "$js" ]; then
 
   # Push the JS source to S3 and update the filename based on the environment
@@ -33,7 +30,7 @@ if [ "$flag" == "$js" ]; then
   if [ "$env" != "prd" ]; then
     aws s3 cp dist/web.js s3://trelles-assets-$env/js/web.js
   else
-    aws s3 cp dist/web.js s3://trelles-assets/js/web_dev.js
+    aws s3 cp dist/web.js s3://trelles-assets-$env/js/web.js
   fi
 
   echo ""
